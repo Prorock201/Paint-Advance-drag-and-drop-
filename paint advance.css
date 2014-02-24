@@ -1,0 +1,66 @@
+body {
+ background-color: #404040;
+}
+
+.control {
+ width: 450px;
+ height: 50px;
+ position: relative;
+ left: 695px;
+}
+
+#customWidget {
+ float: left;
+}
+
+#brush {
+ width: 25px;
+ height: 18px;
+ float: right;
+}
+
+.option div {
+ width: 120px;
+ height: 20px;
+ padding: 7px;
+ display: inline-block;
+ font-size: 10pt;
+ font-family: Verdana, monospace;
+ text-align: center;
+}
+
+.option__brush {
+ color: #FFFFFF;
+}
+
+#buttonEraser, #buttonEraseAll {
+ width: 80px;
+ padding: 3px;
+ display: inline-block;
+ font-size: 10pt;
+ font-family: Verdana, monospace;
+ text-align: center;
+ background-color: #FFFFFF;
+ cursor: pointer;
+ user-select: none;
+ -webkit-user-select: none;
+}
+
+#buttonEraser {
+ margin-left: 50px;
+ color: blue;
+ border: 3px groove blue;	
+}
+
+#buttonEraseAll {
+ color: red;
+ border: 3px groove red;	
+}
+
+#content {
+ box-shadow: 3px 3px 10px 1px black;
+ margin-left: 100px;
+ border: 3px groove #FF6A00;
+ background-color: #FFFFFF;
+ cursor: crosshair;	
+}

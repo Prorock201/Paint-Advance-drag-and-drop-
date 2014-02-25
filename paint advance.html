@@ -4,27 +4,21 @@
         <title>Paint Advance</title>
         <meta charset="utf-8">
         <link rel="stylesheet" href="paint advance.css">
-        <link rel="stylesheet" href="css/colorpicker.css" type="text/css" />
-        <link rel="stylesheet" media="screen" type="text/css" href="css/layout.css" />
         <script src="jquery-1.9.0.min.js"></script>
         <script type="text/javascript" src="paint advance.js"></script>
-        <script type="text/javascript" src="js/colorpicker.js"></script>
-        <script type="text/javascript" src="js/eye.js"></script>
-        <script type="text/javascript" src="js/utils.js"></script>
-        <script type="text/javascript" src="js/layout.js?ver=1.0.2"></script>
+        <script type="text/javascript" src="jscolor/jscolor.js"></script>  
     </head>
     <body>
         <div class="control">
-            <div id="customWidget">
-                <div id="colorSelector2">
-                    <div style="background-color: #00ff00"></div>
-                </div>
-                <div id="colorpickerHolder2"></div>
+            <div class="colorWidget">
+                <div class="colorWidget title">Color:</div>
+                <input class="color {adjust:false, pickerPosition:'bottom'}" type="text" autocomplete="off">
             </div>
-            <div class="option">
-                <div class="option__brush">Brush width:
-                    <input id="brush" maxlength="3"></input>
-                </div>
+            <div class="brush">
+                <div class="brush title">Brush width:</div>
+                <input id="brush" maxlength="3" value="1"></input>
+            </div>
+            <div class="eraser">
                 <div id="buttonEraser">Eraser</div>
                 <div id="buttonEraseAll">Erase All</div>
             </div>

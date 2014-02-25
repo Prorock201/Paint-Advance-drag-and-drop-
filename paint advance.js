@@ -19,15 +19,7 @@ function bindEventHandlers() {
     }
      
 	$(canvas).on('mousedown', function(event) {
-		var mousePos = getMousePos(canvas, event);
 		Clicking = true;
-		/*if (EraserMode) {
-    		context.fillStyle = 'rgb(255, 255, 255)';
-    		context.fillRect(mousePos.x - (BruchWidth/2),mousePos.y - (BruchWidth/2),BruchWidth,BruchWidth);
-    	} else {
-       		context.fillStyle = Color;
-    		context.fillRect(mousePos.x - (BruchWidth/2),mousePos.y - (BruchWidth/2),BruchWidth,BruchWidth);
-    	}*/
     });
 
     $(canvas).on('mouseup', function(event) {
@@ -35,7 +27,6 @@ function bindEventHandlers() {
     });
 
     $(canvas).on('mousemove', function(event) {
-    	Color = $('.colorpicker_new_color').css('background-color');
     	var mousePos = getMousePos(canvas, event);
     	if (Clicking) {
     		if (EraserMode) {
@@ -46,6 +37,10 @@ function bindEventHandlers() {
     			context.fillRect(mousePos.x - (BruchWidth/2),mousePos.y - (BruchWidth/2),BruchWidth,BruchWidth);
     		}
     	}
+    });
+
+    $(".color").on('change', function(event) {
+    	Color = $(event.currentTarget).val();
     });
 
     $('#brush').on('change', function(event) {

@@ -1,8 +1,10 @@
 window.onload = bindEventHandlers;
-var BruchWidth = 1;
+var BruchWidth = 30;
 var Clicking = false;
 var EraserMode = false;
 var Color = 'FFFFFF';
+var PreviousX = 0;
+var PreviousY = 0;
 
 function bindEventHandlers() {
 	var canvas = document.getElementById('content');
@@ -12,7 +14,7 @@ function bindEventHandlers() {
     canvas.height = 600;
 
     function getMousePos(canvas, event) {
-        return {
+    	return {
         	x: event.clientX - rect.left,
             y: event.clientY - rect.top
         };
@@ -31,12 +33,18 @@ function bindEventHandlers() {
     	if (Clicking) {
     		if (EraserMode) {
     			context.fillStyle = 'rgb(255, 255, 255)';
-    			context.fillRect(mousePos.x - (BruchWidth/2),mousePos.y - (BruchWidth/2),BruchWidth,BruchWidth);
+    			context.fillRect(mousePos.x - (BruchWidth/2),mousePos.y - (BruchWidth/2), BruchWidth, BruchWidth);
     		} else {
        			context.fillStyle = Color;
-    			context.fillRect(mousePos.x - (BruchWidth/2),mousePos.y - (BruchWidth/2),BruchWidth,BruchWidth);
+    			context.fillRect(mousePos.x - (BruchWidth/2),mousePos.y - (BruchWidth/2), BruchWidth, BruchWidth);
     		}
+    	} else {
+    		context.clearRect(PreviousX - (BruchWidth/2), PreviousY - (BruchWidth/2), BruchWidth, BruchWidth);
+    		context.fillStyle = Color;
+    		context.fillRect(mousePos.x - (BruchWidth/2),mousePos.y - (BruchWidth/2), BruchWidth, BruchWidth);
     	}
+    	PreviousX = mousePos.x;
+    	PreviousY = mousePos.y;
     });
 
     $(".color").on('change', function(event) {

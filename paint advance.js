@@ -1,23 +1,39 @@
 window.onload = bindEventHandlers;
-var BruchWidth = 30;
+var BruchWidth = 10;
 var Clicking = false;
 var EraserMode = false;
-var Color = 'FFFFFF';
+var Color = '#000000';
 var PreviousX = 0;
 var PreviousY = 0;
+var Marks = [];
+var Pen = [];
 
 function bindEventHandlers() {
-	var canvas = document.getElementById('content');
-    var context = canvas.getContext('2d');
+	window.canvas = document.getElementById('content');
+    window.context = canvas.getContext('2d');
     var rect = canvas.getBoundingClientRect();
     canvas.width = 1000;
     canvas.height = 600;
 
-    function getMousePos(canvas, event) {
+    function getMousePos(event) {
     	return {
         	x: event.clientX - rect.left,
             y: event.clientY - rect.top
         };
+    }
+
+    function getMark() {
+        this.x = event.clientX - rect.left;
+        this.y = event.clientY - rect.top;
+        this.color = Color;
+        this.size = BruchWidth;
+    }
+
+    function getBruch() {
+        this.x = event.clientX - rect.left;
+        this.y = event.clientY - rect.top;
+        this.color = Color;
+        this.size = BruchWidth;
     }
      
 	$(canvas).on('mousedown', function(event) {
@@ -29,22 +45,32 @@ function bindEventHandlers() {
     });
 
     $(canvas).on('mousemove', function(event) {
-    	var mousePos = getMousePos(canvas, event);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        var mousePos = getMousePos(event);
+        Pen = [];
+        Pen.push(new getBruch());
+        $.each(Marks, function (index, element) {
+            context.fillStyle = element.color;  
+            context.fillRect(element.x - (element.size/2),element.y - (element.size/2), element.size, element.size);
+        });
+
+        $.each(Pen, function (index, element) {
+            context.fillStyle = element.color;  
+            context.fillRect(element.x - (element.size/2),element.y - (element.size/2), element.size, element.size);
+        });
+
     	if (Clicking) {
     		if (EraserMode) {
+                Color = '#FFFFFF'
     			context.fillStyle = 'rgb(255, 255, 255)';
     			context.fillRect(mousePos.x - (BruchWidth/2),mousePos.y - (BruchWidth/2), BruchWidth, BruchWidth);
     		} else {
        			context.fillStyle = Color;
     			context.fillRect(mousePos.x - (BruchWidth/2),mousePos.y - (BruchWidth/2), BruchWidth, BruchWidth);
     		}
-    	} else {
-    		context.clearRect(PreviousX - (BruchWidth/2), PreviousY - (BruchWidth/2), BruchWidth, BruchWidth);
-    		context.fillStyle = Color;
-    		context.fillRect(mousePos.x - (BruchWidth/2),mousePos.y - (BruchWidth/2), BruchWidth, BruchWidth);
-    	}
-    	PreviousX = mousePos.x;
-    	PreviousY = mousePos.y;
+            Marks.push(new getMark());
+    	} 
+        Color = $('.color').val();
     });
 
     $(".color").on('change', function(event) {
@@ -68,5 +94,6 @@ function bindEventHandlers() {
 
     $('#buttonEraseAll').on('click', function(event) {
     	context.clearRect(0, 0, canvas.width, canvas.height);
+        Marks = [];
     });
 }

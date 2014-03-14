@@ -1,5 +1,5 @@
 window.onload = bindEventHandlers;
-var BruchWidth = 10;
+var brushWidth = 10;
 var Clicking = false;
 var EraserMode = false;
 var Color = '#000000';
@@ -22,25 +22,25 @@ function bindEventHandlers() {
         };
     }
 
-    function getMark() {
+    function Mark() {
         this.x = event.clientX - rect.left;
         this.y = event.clientY - rect.top;
         this.color = Color;
-        this.size = BruchWidth;
+        this.size = brushWidth;
     }
 
-    function getBruch() {
+    function Brush() {
         this.x = event.clientX - rect.left;
         this.y = event.clientY - rect.top;
         this.color = Color;
-        this.size = BruchWidth;
+        this.size = brushWidth;
     }
      
 	$(canvas).on('mousedown', function(event) {
 		Clicking = true;
     });
 
-    $(canvas).on('mouseup', function(event) {
+    $(document).on('mouseup', function(event) {
 		Clicking = false;
     });
 
@@ -48,43 +48,54 @@ function bindEventHandlers() {
         context.clearRect(0, 0, canvas.width, canvas.height);
         var mousePos = getMousePos(event);
         Pen = [];
-        Pen.push(new getBruch());
+        Pen.push(new Brush());
+
         $.each(Marks, function (index, element) {
             context.fillStyle = element.color;  
             context.fillRect(element.x - (element.size/2),element.y - (element.size/2), element.size, element.size);
         });
 
         $.each(Pen, function (index, element) {
-            context.fillStyle = element.color;  
-            context.fillRect(element.x - (element.size/2),element.y - (element.size/2), element.size, element.size);
+            if (Color == '#FFFFFF') {
+                context.strokeStyle = 'black';
+                context.strokeRect(element.x - (element.size/2),element.y - (element.size/2), element.size, element.size);
+                context.fillStyle = element.color;  
+                context.fillRect(element.x - (element.size/2),element.y - (element.size/2), element.size, element.size);  
+            } else {
+                context.fillStyle = element.color;  
+                context.fillRect(element.x - (element.size/2),element.y - (element.size/2), element.size, element.size);
+            }
         });
-
+        
     	if (Clicking) {
     		if (EraserMode) {
-                Color = '#FFFFFF'
     			context.fillStyle = 'rgb(255, 255, 255)';
-    			context.fillRect(mousePos.x - (BruchWidth/2),mousePos.y - (BruchWidth/2), BruchWidth, BruchWidth);
+    			context.fillRect(mousePos.x - (brushWidth/2),mousePos.y - (brushWidth/2), brushWidth, brushWidth);
     		} else {
        			context.fillStyle = Color;
-    			context.fillRect(mousePos.x - (BruchWidth/2),mousePos.y - (BruchWidth/2), BruchWidth, BruchWidth);
+    			context.fillRect(mousePos.x - (brushWidth/2),mousePos.y - (brushWidth/2), brushWidth, brushWidth);
     		}
-            Marks.push(new getMark());
-    	} 
-        Color = $('.color').val();
+            Marks.push(new Mark());    
+    	}
     });
 
     $(".color").on('change', function(event) {
-    	Color = $(event.currentTarget).val();
+    	Color = '#' + $(event.currentTarget).val();
+        EraserMode = false;
+        $('#buttonEraser').css('background-color', 'rgb(255, 255, 255)');
     });
 
     $('#brush').on('change', function(event) {
-    	BruchWidth = $(event.currentTarget).val();
+    	brushWidth = $(event.currentTarget).val();
     });
 
     $('#buttonEraser').on('click', function(event) {
     	var eraser = $(event.currentTarget).css('background-color');
     	if (eraser == 'rgb(255, 255, 255)') {
     		EraserMode = true;
+            Color = '#FFFFFF'
+            $(".color").val('FFFFFF');
+            $(".color").css('background-color', '#FFFFFF');
     		$(event.currentTarget).css('background-color', 'rgb(255, 216, 0)');
     	} else {
     		EraserMode = false;

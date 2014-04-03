@@ -56,7 +56,7 @@ function bindEventHandlers() {
         });
 
         $.each(Pen, function (index, element) {
-            if (Color == '#FFFFFF') {
+            if (Color >= '#EE0000') {
                 context.strokeStyle = 'black';
                 context.strokeRect(element.x - (element.size/2),element.y - (element.size/2), element.size, element.size);
                 context.fillStyle = element.color;  
@@ -85,7 +85,7 @@ function bindEventHandlers() {
         $('#buttonEraser').css('background-color', 'rgb(255, 255, 255)');
     });
 
-    $('#brush').on('change', function(event) {
+    $('#brush').on('keyup', function(event) {
     	brushWidth = $(event.currentTarget).val();
     });
 
